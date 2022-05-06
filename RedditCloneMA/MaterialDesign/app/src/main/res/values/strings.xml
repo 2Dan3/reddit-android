@@ -16,6 +16,7 @@
     <string name="title_activity_second">Post Title here</string>
     <string name="post_tab_text">Current Post</string>
     <string name="comments_tab_text">Comments</string>
+    <string name="karma_points">283</string>
     <string name="report_btn_text">REPORT</string>
     <string name="reply_btn_text">REPLY</string>
     <string name="splash_screen">RedditCloneApp Splashscreen</string>
