@@ -28,6 +28,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 
+import redditclone.CommentListRecyclerViewAdapter;
 import redditclone.R;
 
 
@@ -59,18 +60,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Snackbar.make(findViewById(R.id.coordinator), "I'm a Snackbar", Snackbar.LENGTH_LONG).setAction("Action", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(MainActivity.this, "Snackbar Action", Toast.LENGTH_LONG).show();
-                    }
-                }).show();
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Snackbar.make(findViewById(R.id.coordinator), "I'm a Snackbar", Snackbar.LENGTH_LONG).setAction("Action", new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Toast.makeText(MainActivity.this, "Snackbar Action", Toast.LENGTH_LONG).show();
+//                    }
+//                }).show();
+//            }
+//        });
 
         DesignDemoPagerAdapter adapter = new DesignDemoPagerAdapter(getSupportFragmentManager());
         ViewPager viewPager = (ViewPager)findViewById(R.id.viewpager);
@@ -124,16 +125,18 @@ public class MainActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             Bundle args = getArguments();
             int tabPosition = args.getInt(TAB_POSITION);
+            View v = null;
+//            ArrayList<String> items = new ArrayList<String>();
 
-            ArrayList<String> items = new ArrayList<String>();
-            for (int i = 0; i < 50; i++) {
-                items.add("Tab #" + tabPosition + " item #" + i);
+            if (tabPosition==0) {
+                v = inflater.inflate(R.layout.activity_second, container, false);
             }
-
-            View v =  inflater.inflate(R.layout.fragment_list_view, container, false);
-            RecyclerView recyclerView = (RecyclerView)v.findViewById(R.id.recyclerview);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            recyclerView.setAdapter(new DesignDemoRecyclerAdapter(items));
+            else if (tabPosition==1) {
+                v = inflater.inflate(R.layout.fragment_comment_list, container, false);
+//                RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.commentslist);
+//                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+//                recyclerView.setAdapter(new CommentListRecyclerViewAdapter(items));
+            }
 
             return v;
         }
@@ -159,7 +162,11 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return "Tab " + position;
+            String retval ="";
+            if(position==0) retval = "Current Post";
+            else if (position==1) retval = "Comments";
+
+            return retval;
         }
     }
 
